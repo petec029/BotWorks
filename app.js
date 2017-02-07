@@ -34,18 +34,10 @@ var Botkit = require('botkit');
 var controller = Botkit.botframeworkbot({
 });
 
-/*
-var bot = controller.spawn({
-        appId: process.env.app_id,
-        appPassword: process.env.app_password
-});
-*/
-
 var bot = controller.spawn({
         appId: '0dc7da38-9c10-4348-b404-0a209b0fe0f6',
         appPassword: 'iocgVXAm0ZzfPVFBbiH8oyb'
 });
-
 
 
 // if you are already using Express, you can use your own server instance...
