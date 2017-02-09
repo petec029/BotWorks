@@ -1,4 +1,4 @@
-/*
+
 // Original hello world program
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -15,7 +15,8 @@ server.listen(process.env.PORT || 3000, function()
 var connector = new builder.ChatConnector
 ({ appId: '0dc7da38-9c10-4348-b404-0a209b0fe0f6', appPassword: 'iocgVXAm0ZzfPVFBbiH8oyb' });
 var bot = new builder.UniversalBot(connector);
-server.post('/API/Messages', connector.listen());
+server.post('botframework/receive', connector.listen());
+//server.post('/API/Messages', connector.listen());
 
 server.get('/', restify.serveStatic({
     directory: __dirname,
@@ -27,10 +28,10 @@ server.get('/', restify.serveStatic({
 bot.dialog('/', function (session) {
     session.send("Hello RightAnswers");
 });
-*/
 
 
 
+/*
 var Botkit = require('botkit');
 var controller = Botkit.botframeworkbot({
 });
@@ -67,5 +68,6 @@ controller.hears(['cookies'], 'message_received', function(bot, message) {
         });
     });
 });
+*/
 
 
