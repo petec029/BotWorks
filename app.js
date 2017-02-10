@@ -1,4 +1,5 @@
 
+/*
 // Original hello world program
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -28,10 +29,10 @@ server.get('/', restify.serveStatic({
 bot.dialog('/', function (session) {
     session.send("Hello RightAnswers");
 });
+*/
 
 
 
-/*
 var Botkit = require('botkit');
 var controller = Botkit.botframeworkbot({
 });
@@ -68,6 +69,6 @@ controller.hears(['cookies'], 'message_received', function(bot, message) {
         });
     });
 });
-*/
+
 
 
