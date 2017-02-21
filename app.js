@@ -35,17 +35,21 @@ intents.matches('new account', [
     var accountLevel;
     var typeOfPersonalAccount;
     var typeOfBusinessAccount;
+    //var args1;
 
     function (session, args, next) {
+        //args1 = args;
         accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
+        accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
         if (!accountType) {
             builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
         } else {
+//            next({ response: accountType.entity });
             next({ response: accountType.entity });
         }
     },
-    function (session, args, next) {
-        accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
+    function (session, results, next) {
+        //accountLevel = builder.EntityRecognizer.findEntity(args1.entities, 'accountLevel');
         if (!accountLevel) {
             builder.Prompts.text(session, "What account level do you want to set up? Basic or Premium");
         } else {
@@ -61,6 +65,9 @@ intents.matches('new account', [
         }
     }
 ]);
+
+intents.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."));
+
 
 // Add intent handlers
 //dialog.matches('builtin.intent.alarm.set_alarm', builder.DialogAction.send('Creating Alarm'));
