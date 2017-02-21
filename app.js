@@ -31,18 +31,31 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents);
 
 intents.matches('new account', [
+    var accountType;
+    var accountLevel;
+    var typeOfPersonalAccount;
+    var typeOfBusinessAccount;
+
     function (session, args, next) {
-        var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
+        accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
         if (!accountType) {
             builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
         } else {
             next({ response: accountType.entity });
         }
     },
+    function (session, args, next) {
+        accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
+        if (!accountLevel) {
+            builder.Prompts.text(session, "What account level do you want to set up? Basic or Premium");
+        } else {
+            next({ response: accountLevel.entity });
+        }
+    },
     function (session, results) {
         if (results.response) {
             // ... save task
-            session.send("Ok... Entity value is '%s'.", results.response);
+            session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
         } else {
             session.send("Ok");
         }
