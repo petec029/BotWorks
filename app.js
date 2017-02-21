@@ -24,11 +24,40 @@ server.get('/', restify.serveStatic({
     default: '/index.html'
 }));
 
+// Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Cortana Bot.
+var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9eb8032f-bf57-4d9e-99ec-6ea77dfd9033?subscription-key=63b95557298e43db812f2708f818030a&verbose=true';
+var recognizer = new builder.LuisRecognizer(model);
+var intents = new builder.IntentDialog({ recognizers: [recognizer] });
+bot.dialog('/', intents);
+
+intents.matches('new account', [
+    function (session, args, next) {
+        var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
+        if (!accountType) {
+            builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
+        } else {
+            next({ response: accountType.entity });
+        }
+    },
+    function (session, results) {
+        if (results.response) {
+            // ... save task
+            session.send("Ok... Entity value is '%s'.", results.response);
+        } else {
+            session.send("Ok");
+        }
+    }
+]);
+
+// Add intent handlers
+//dialog.matches('builtin.intent.alarm.set_alarm', builder.DialogAction.send('Creating Alarm'));
+//dialog.matches('builtin.intent.alarm.delete_alarm', builder.DialogAction.send('Deleting Alarm'));
+//dialog.onDefault(builder.DialogAction.send("I'm sorry I didn't understand. I can only create & delete alarms."));
 
 // Create bot dialogs
-bot.dialog('/', function (session) {
-    session.send("Hello RightAnswers");
-});
+//bot.dialog('/', function (session) {
+//    session.send("Hello RightAnswers");
+//});
 
 
 
@@ -70,6 +99,3 @@ controller.hears(['cookies'], 'message_received', function(bot, message) {
     });
 });
 */
-
-
-
