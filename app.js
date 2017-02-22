@@ -61,7 +61,8 @@ intents.matches('new account', [
     function (session, results) {
         if (results.response) {
             // ... save task
-            session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
+            //session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
+            session.send("Intent: new account, accountType: '%s'", results.response);
         } else {
             session.send("Ok");
         }
