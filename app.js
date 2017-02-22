@@ -47,7 +47,7 @@ intents.matches('new account', [
           match = builder.EntityRecognizer.findBestmatch(accountTypes, accountType.entity);
         }
         //if (!accountType) {
-        if (!match)
+        if (!match) {
 //            builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
             builder.Prompts.choice(session, "What type of account do you want to set up?", accountTypes);
         } else {
