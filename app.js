@@ -40,16 +40,18 @@ intents.matches('new account', [
     function (session, args, next) {
         //args1 = args;
         session.dialogData.args = args;
-        //var match;
+        var accountTypes = ["Business","Personal"];
+        var match;
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
-        //if (accountType) {
-        //  match = builder.EntityRecognizer.findBestmatch()
+        if (accountType) {
+          match = builder.EntityRecognizer.findBestmatch(accountTypes, accountType.entity);
         //}
-        if (!accountType) {
+        //if (!accountType) {
+        if (!match)
 //            builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
-            builder.Prompts.choice(session, "What type of account do you want to set up?", ["Business","Personal"]);
+            builder.Prompts.choice(session, "What type of account do you want to set up?", accountTypes);
         } else {
-            session.dialogData.accountType = accountType;
+            session.dialogData.accountType = accountType.entity;
             next();
 //            next({ response: accountType.entity });
         }
@@ -74,7 +76,7 @@ intents.matches('new account', [
           // ... save task
           //session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
 //            session.send("Intent: 'new account'");
-          session.send("Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'",session.dialogData.accountType,session.dialogData.accountLevel);
+          session.send("Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'",session.dialogData.accountType,session.dialogData.accountLevel.entity);
 //            session.send("AccountType: '%s'", session.dialogData.accountType);
 //            session.send("AccountLevel: '%s'", results.response);
 //            session.send("AccountType: '%s'", results.response);
