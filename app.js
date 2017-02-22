@@ -31,16 +31,16 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents);
 
 intents.matches('new account', [
-    var accountType;
-    var accountLevel;
-    var typeOfPersonalAccount;
-    var typeOfBusinessAccount;
+    //var accountType;
+    //var accountLevel;
+    //var typeOfPersonalAccount;
+    //var typeOfBusinessAccount;
     //var args1;
 
     function (session, args, next) {
         //args1 = args;
-        accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
-        accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
+        var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
+        var accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
         if (!accountType) {
             builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
         } else {
