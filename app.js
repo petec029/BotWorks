@@ -43,7 +43,8 @@ intents.matches('new account', [
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
         //var accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
         if (!accountType) {
-            builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
+//            builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
+            builder.Prompts.choice(session, "What type of account do you want to set up?", ["Business","Personal"]);
         } else {
             next({ response: accountType.entity });
         }
@@ -54,18 +55,21 @@ intents.matches('new account', [
         }
         var accountLevel = builder.EntityRecognizer.findEntity(session.dialogData.args.entities, 'accountLevel');
         if (!accountLevel) {
-            builder.Prompts.text(session, "What account level do you want to set up? Basic or Premium");
+//            builder.Prompts.text(session, "What account level do you want to set up? Basic or Premium");
+            builder.Prompts.choice(session, "What account level do you want to set up?", ["Basic","Premium"]);
         } else {
             next({ response: accountLevel.entity });
         }
     },
     function (session, results) {
         if (results.response) {
+          session.dialogData.accountLevel = results.response;
             // ... save task
             //session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
-            session.send("Intent: 'new account'");
-            session.send("AccountType: '%s'", session.dialogData.accountType);
-            session.send("AccountLevel: '%s'", results.response);
+//            session.send("Intent: 'new account'");
+            session.send("Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'",session.dialogData.accountType,session.dialogData.accountLevel);
+//            session.send("AccountType: '%s'", session.dialogData.accountType);
+//            session.send("AccountLevel: '%s'", results.response);
 //            session.send("AccountType: '%s'", results.response);
 //            session.send("AccountLevel: '%s'", results.response);
         } else {
