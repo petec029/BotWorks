@@ -39,30 +39,35 @@ intents.matches('new account', [
 
     function (session, args, next) {
         //args1 = args;
+        session.dialogData.args = args;
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'accountType');
-        var accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
+        //var accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
         if (!accountType) {
             builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
         } else {
             next({ response: accountType.entity });
-//            next();
         }
     },
-    /*
     function (session, results, next) {
-        //accountLevel = builder.EntityRecognizer.findEntity(args1.entities, 'accountLevel');
+        if (results.response) {
+          session.dialogData.accountType = results.response;
+        }
+        var accountLevel = builder.EntityRecognizer.findEntity(session.dialogData.args.entities, 'accountLevel');
         if (!accountLevel) {
             builder.Prompts.text(session, "What account level do you want to set up? Basic or Premium");
         } else {
             next({ response: accountLevel.entity });
         }
     },
-    */
     function (session, results) {
         if (results.response) {
             // ... save task
             //session.send("Intent: new account, accountType: '%s', accountLevel: '%s'", accountType, accountLevel);
-            session.send("Intent: 'new account' \nAccountType: '%s'", results.response);
+            session.send("Intent: 'new account'");
+            session.send("AccountType: '%s'", session.dialogData.accountType);
+            session.send("AccountLevel: '%s'", results.response);
+//            session.send("AccountType: '%s'", results.response);
+//            session.send("AccountLevel: '%s'", results.response);
         } else {
             session.send("Ok");
         }
