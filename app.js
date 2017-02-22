@@ -44,10 +44,11 @@ intents.matches('new account', [
         if (!accountType) {
             builder.Prompts.text(session, "What type of account do you want to set up? Business or Personal");
         } else {
-//            next({ response: accountType.entity });
             next({ response: accountType.entity });
+//            next();
         }
     },
+    /*
     function (session, results, next) {
         //accountLevel = builder.EntityRecognizer.findEntity(args1.entities, 'accountLevel');
         if (!accountLevel) {
@@ -56,6 +57,7 @@ intents.matches('new account', [
             next({ response: accountLevel.entity });
         }
     },
+    */
     function (session, results) {
         if (results.response) {
             // ... save task
