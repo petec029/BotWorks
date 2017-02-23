@@ -48,6 +48,7 @@ intents.matches('new account', [
         session.dialogData.account = account;
 
         // Prompt for account type
+        var accountTypes = ["Business","Personal"];
         if (!account.accountType) {
           builder.Prompts.choice(session, "What type of account do you want to set up?", accountTypes);
           //builder.Prompts.text(session, 'What type of account do you want to set up? Business or Personal');
@@ -74,7 +75,7 @@ intents.matches('new account', [
 
 
 /*
-        var accountTypes = ["Business","Personal"];
+
 
         console.log('accountType',accountType);
         if (!accountType) {
