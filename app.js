@@ -38,7 +38,7 @@ intents.matches('new account', [
         var accountLevel = builder.EntityRecognizer.findEntity(args.entities, 'accountLevel');
         var typeOfPersonalAccount = builder.EntityRecognizer.findEntity(args.entities, 'typeOfPersonalAccount');
         var typeOfBusinessAccount = builder.EntityRecognizer.findEntity(args.entities, 'typeOfBusinessAccount');
-        console.log('ENTITIES', accountType, accountLevel, typeOfPersonalAccount, typeOfBusinessAccount)l
+        console.log('ENTITIES', accountType, accountLevel, typeOfPersonalAccount, typeOfBusinessAccount);
         var account = {
           accountType: accountType ? accountType.entity : null,
           accountLevel: accountLevel ? accountLevel.entity : null,
@@ -55,11 +55,11 @@ intents.matches('new account', [
         }
     },
     function (session, results, next) {
-        console.log('second block')
-    	  var account = session.dialogData.account
+        console.log('second block');
+    	  var account = session.dialogData.account;
 		    if (results.response) {
-			      console.log('RESPONSE', results)
-			      account.accountType = results.response
+			      console.log('RESPONSE', results);
+			      account.accountType = results.response;
         }
 
         // Prompt for account level
@@ -104,11 +104,11 @@ intents.matches('new account', [
     },
     */
     function (session, results) {
-        console.log('reply')
-        var account = session.dialogData.account
+        console.log('reply');
+        var account = session.dialogData.account;
         if (results.response) {
-            console.log('RESPONSE', results)
-            account.accountLevel = results.response
+            console.log('RESPONSE', results);
+            account.accountLevel = results.response;
 
           //session.dialogData.accountLevel = results.response;
           // ... save task
