@@ -61,7 +61,7 @@ intents.matches('new account', [
     	  var account = session.dialogData.account;
 		    if (results.response) {
 			      console.log('RESPONSE', results);
-			      account.accountType = results.response;
+			      account.accountType = results.response.entity;
         }
 
         // Prompt for account level
@@ -111,7 +111,7 @@ intents.matches('new account', [
         var account = session.dialogData.account;
         if (results.response) {
             console.log('RESPONSE', results);
-            account.accountLevel = results.response;
+            account.accountLevel = results.response.entity;
 
           //session.dialogData.accountLevel = results.response;
           // ... save task
