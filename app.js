@@ -49,7 +49,8 @@ intents.matches('new account', [
 
         // Prompt for account type
         if (!account.accountType) {
-          builder.Prompts.text(session, 'What type of account do you want to set up?');
+          builder.Prompts.choice(session, "What type of account do you want to set up?", accountTypes);
+          //builder.Prompts.text(session, 'What type of account do you want to set up? Business or Personal');
         } else {
           next();
         }
@@ -64,7 +65,8 @@ intents.matches('new account', [
 
         // Prompt for account level
         if (!account.accountLevel) {
-          builder.Prompts.text(session, 'What level account would you like? Basic or Premium');
+            builder.Prompts.choice(session, "What account level do you want to set up?", ["Basic","Premium"]);
+            //builder.Prompts.text(session, 'What level account would you like? Basic or Premium');
         } else {
           next();
         }
