@@ -132,7 +132,7 @@ intents.matches('new account', [
 
 ]);
 
-intents.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."));
+intents.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand you."));
 
 
 // Add intent handlers
