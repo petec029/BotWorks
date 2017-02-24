@@ -15,8 +15,9 @@ server.listen(process.env.PORT || 3000, function()
 // Create chat bot
 var connector = new builder.ChatConnector
 ({ appId: '0dc7da38-9c10-4348-b404-0a209b0fe0f6', appPassword: 'iocgVXAm0ZzfPVFBbiH8oyb' });
+//var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
-server.post('botframework/receive', connector.listen());
+
 //server.post('/API/Messages', connector.listen());
 
 server.get('/', restify.serveStatic({
@@ -24,7 +25,7 @@ server.get('/', restify.serveStatic({
     default: '/index.html'
 }));
 
-// Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Cortana Bot.
+// Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Bot.
 var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9eb8032f-bf57-4d9e-99ec-6ea77dfd9033?subscription-key=63b95557298e43db812f2708f818030a&verbose=true';
 var recognizer = new builder.LuisRecognizer(model);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
@@ -72,7 +73,6 @@ intents.matches('new account', [
           next();
         }
     },
-
 
 /*
 
