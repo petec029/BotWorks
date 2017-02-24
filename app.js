@@ -18,7 +18,9 @@ var connector = new builder.ChatConnector
 //var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
 
-//server.post('/API/Messages', connector.listen());
+//server.post('/botframework/receive', connector.listen());
+
+server.post('/API/Messages', connector.listen());
 
 server.get('/', restify.serveStatic({
     directory: __dirname,
