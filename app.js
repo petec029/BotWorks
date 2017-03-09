@@ -13,12 +13,12 @@ server.listen(process.env.PORT || 3000, function()
 
 
 // Create chat bot
-var connector = new builder.ChatConnector
-({ appId: '0dc7da38-9c10-4348-b404-0a209b0fe0f6', appPassword: 'iocgVXAm0ZzfPVFBbiH8oyb' });
-//var connector = new builder.ConsoleConnector().listen();
+//var connector = new builder.ChatConnector
+//({ appId: '0dc7da38-9c10-4348-b404-0a209b0fe0f6', appPassword: 'iocgVXAm0ZzfPVFBbiH8oyb' });
+var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
 
-server.post('/botframework/receive', connector.listen());
+//server.post('/botframework/receive', connector.listen());
 //server.post('/API/Messages', connector.listen());
 
 server.get('/', restify.serveStatic({
@@ -65,6 +65,7 @@ intents.matches('new account', [
 			      console.log('RESPONSE', results);
 			      account.accountType = results.response.entity;
         }
+        session.dialogData.account = account;
 
         // Prompt for account level
         if (!account.accountLevel) {
@@ -74,7 +75,24 @@ intents.matches('new account', [
           next();
         }
     },
+    function (session, results, next) {
+        console.log('third block');
+    	  var account = session.dialogData.account;
+		    if (results.response) {
+			      console.log('RESPONSE', results);
+			      account.accountLevel = results.response.entity;
+        }
+        session.dialogData.account = account;
 
+        // Prompt for type of business or perosnalaccount level
+        if ((account.accountType.toLowerCase() == 'business') && (!account.typeOfBusinessAccount)) {
+            builder.Prompts.choice(session, "What type of business do you have?", ["LLC","Sole Proprietorship"]);
+        } else if ((account.accountType.toLowerCase() == 'personal') && (!account.typeOfPersonalAccount)) {
+            builder.Prompts.choice(session, "What type of personal account do you need?", ["Individual","Joint"]);
+        } else {
+          next();
+        }
+    },
 /*
 
 
@@ -112,7 +130,11 @@ intents.matches('new account', [
         var account = session.dialogData.account;
         if (results.response) {
             console.log('RESPONSE', results);
-            account.accountLevel = results.response.entity;
+            if (account.accountType.toLowerCase() == 'business') {
+                account.typeOfBusinessAccount = results.response.entity;
+            } else if (account.accountType.toLowerCase() == 'personal') {
+                account.typeOfPersonalAccount = results.response.entity;
+            }
 
           //session.dialogData.accountLevel = results.response;
           // ... save task
@@ -127,7 +149,7 @@ intents.matches('new account', [
         //else {
         //    session.send("Ok Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'",session.dialogData.accountType.entity ,session.dialogData.accountLevel.entity);
         //}
-        session.send("Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'",account.accountType, account.accountLevel);
+        session.send("Intent: 'new account'\n\nAccountType: '%s'\n\nAccountLevel: '%s'\n\nTypeOfBusinessAccount: '%s'\n\nTypeOfPersonalAccount: '%s'",account.accountType, account.accountLevel, account.typeOfBusinessAccount, account.typeOfPersonalAccount);
     }
 
 ]);
